@@ -6,7 +6,6 @@
 CommonSecurityLog
 | where DestinationIP == "<IP>"
 ```
-<br>
 Check CommonSecurityLog for dest. ip
 
 ```kql
