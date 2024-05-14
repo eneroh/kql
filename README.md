@@ -12,14 +12,12 @@ Check CommonSecurityLog for dest. ip
 CommonSecuityLog
 | where DestinationDomainName == "<domain name>"
 ```
-<br>
 Checks CommonSecurityLog for Dest. domain name
 
 ```kql
 CommonSecurityLog
 | where SourceIP == "<IP>"
 ```
-<br>
 Check CommonSecurityLog for Source IP
 
 SignInLogs
