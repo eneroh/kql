@@ -39,7 +39,9 @@ SecurityAlert
 | summarize by tostring (Entities)
 ```
 Check Security Alert for AlertName containing "Ti map"
+<br>
 The string does not contain "<ip>"
+<br>
 Then summarize by entities in string format
 
 ```kql
@@ -61,6 +63,7 @@ OfficeActivity
 | summarize by tostring(Parameters)
 ````
 find <ip/host/whatever>
+<br>
 To find a field that isn't showing, then use the field that appears
 
 ```kql
@@ -111,6 +114,7 @@ DeviceInfo
 | where OnboardingStatus == "Can be onboarded" and OSPlatform contains ("WindowsServer")
 ```
 Simplified KQL query for looking for servers to be onboarded. Wed Theme (EDR) day specific.
+<br>
 Still needs fine-tuning. Something exists within defender which makes this query unusable. I need to ifugre out what this is then apply it here
 
 ```kql
@@ -120,8 +124,11 @@ DeviceInfo
 | distinct DeviceName
 ```
 Resolved the above via:
+<br>
 > Utilization of time
+<br>
 > Specifying the need for endpoints
+<br>
 > Utilizing distinct to minimise results
 
 ```kql
@@ -131,6 +138,7 @@ DeviceInfo
 | distinct DeviceName, OSPlatform, OSVersionInfo, DeviceType, OnboardingStatus
 ```
 More honed in results of the above
+<br>
 Can be utilized in Wed Theme Day
 
 ```kql
