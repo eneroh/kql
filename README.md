@@ -1,6 +1,7 @@
 # kql
 
 ## Summary
+This README houses my kql queries. Inspiration for this document, my upskilling and some queries goes to reprise99. Essentially this houses queries that I have utilized during my work in the field.
 
 ```kql
 CommonSecurityLog
