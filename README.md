@@ -10,7 +10,7 @@ CommonSecurityLog
 Check CommonSecurityLog for dest. ip
 
 ```kql
-CommonSecuityLog
+CommonSecurityLog
 | where DestinationDomainName == "<domain name>"
 ```
 Checks CommonSecurityLog for Dest. domain name
