@@ -94,7 +94,9 @@ SigninLogs
 //| where IPAddress == "<IP>"
 | summarize by TimeGenerated, UserPrincipalName, Location, tostring(Status), tostring(DeviceDetail), IPAddress, AppDisplayName, tostring(LocationDetails), AuthenticationRequirement, tostring(MfaDetail), AuthenticationDetails
 ```
-MY PRIMARY SIGNINLOGS SEARCH I USE DAILY
+Check SigninLogs for particular user and/or IPAddress then summarize by filters
+<br>
+Formerly my primary SigninLogs query
 
 ```kql
 CommonSecurityLog
@@ -102,8 +104,9 @@ CommonSecurityLog
 //| where DestinationIP == "<IP>" //and SourceIP == "<IP>"
 | project TimeGenerated, DeviceAction, Activity, DestinationHostName, RequestURL, RequestContext, SourceIP, SourceUserName, SourceTranslatedAddress
 ```
-MY PRIMARY COMMONSECURITYLOG SEARCH I USE DAILY
-
+Check CommonSecurityLog for DestinationhostName and/or SourceIP, and/or DestinaionIP and/or SourceIP then project using filters
+<br>
+Formerly my primary CommonSecurityLog query
 ```kql
 AzureActivity
 | where Caller == "<alphanumeric>"
