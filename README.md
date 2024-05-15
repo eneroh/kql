@@ -126,11 +126,11 @@ DeviceInfo
 ```
 Resolved the above via:
 <br>
-- Utilization of time
+Utilization of time
 <br>
-- Specifying the need for endpoints
+Specifying the need for endpoints
 <br>
-- Utilizing distinct to minimise results
+Utilizing distinct to minimise results
 
 ```kql
 DeviceInfo
