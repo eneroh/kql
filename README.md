@@ -222,6 +222,7 @@ and DeviceName == "<device>"
 | extend Relevance = ifff(Timestamp == selectedTimestamp, "Selected event", ifff(Timestamp < selectedTimestamp, "Earlier event", "Later event"))
 | project-reorder Relevance, RemoteUrl, RemoteIP
 ```
+Check DeviceNetworkEvents for particular device related actvity during specific time. Automated query from "Hunt for related events" in Device Timeline but honed in with extra project-reorder filters
 
 ```kql
 AADServicePrincipalSigninLogs
@@ -292,6 +293,7 @@ DeviceNetworkEvents
 | where DeviceName contains "<Device>"
 | project Timestamp, DeviceName, ActionType, RemoteIP, RemotePort, RemoteUrl, InitiatingProcessVersionInfoInternalFileName
 ```
+Check DeviceNetworkEvents for devicename, then project using filters - ti map specific
 
 ```kql
 Syslog
@@ -300,3 +302,20 @@ Syslog
 | project TimeGenerated, SyslogMessage
 ```
 Useful for Multiple RDP connections made by a single system
+
+```kql
+CommonSecurityLog
+| where TimeGenerated > ago(7d)
+| where DeviceVendor == "Cyber-Ark" and DeviceProduct == "Vault" //and DeviceEventClassID == "309"
+| where SourceUserName == "<user>"
+| project TimeGenerated, DeviceEventClassID, Activity, SourceUserName
+```
+Check commonsecuritylog for CyberArk activity - Useful for: CCX - CyberArk Undefined User Login
+
+```kql
+AzureDiagnostics
+| where userAgent_s == "<useragent>"
+| where timestamp == <time>
+| project TimeGenerated, clientIP_s, clientIp_s, httpStatusCode_d
+```
+Check AzureDiagnostics for particular Malformed User Agent
