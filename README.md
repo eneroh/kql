@@ -49,7 +49,7 @@ SigninLogs
 | where UserPrincipalName =~ "John.Smith@domain.com" and ResultType == "0" //and IPAddress != "<IP>"
 | summarize by TimeGenerated, UserPrincipalName, AppDisplayName, IPAddress, tostring(DeviceDetail)
 ```
-
+Check SigninLogs for specific user, result type and/or not specific ip address
 ```kql
 OfficeActivity
 | where Operation == "New-InboxRule and UserId contains "<User's last name>"
@@ -108,6 +108,7 @@ MY PRIMARY COMMONSECURITYLOG SEARCH I USE DAILY
 AzureActivity
 | where Caller == "<alphanumeric>"
 ```
+Basic AzureActivity, searches for caller
 
 ```kql
 DeviceInfo
@@ -125,11 +126,11 @@ DeviceInfo
 ```
 Resolved the above via:
 <br>
-> Utilization of time
+- Utilization of time
 <br>
-> Specifying the need for endpoints
+- Specifying the need for endpoints
 <br>
-> Utilizing distinct to minimise results
+- Utilizing distinct to minimise results
 
 ```kql
 DeviceInfo
@@ -174,9 +175,11 @@ IdentityInfo
   | project DeviceMain = DeviceName, LoggedOnUsers, JoinType
   )
   on $left.AccountMain == $right.DeviceMain
-Above but has addition of DeviceInfo to enrich the informaiton more
-Broken current however, provides results but the results are blank
 ```
+Above but has addition of DeviceInfo to enrich the information more
+<br>
+Broken current however, provides results but the results are blank
+
 
 ```kql
 IdentityInfo
@@ -190,6 +193,7 @@ IdentityInfo
   )
   on $left.AccountMain == $right.DeviceMain
 ```
+Fixed above using this kql query
 
 ```kql
 DeviceFileEvents
@@ -200,8 +204,9 @@ Review files for file format: .crx (chrome web extensions)
 ```kql
 DeviceNetworkEvents
 | where Timestamp between (ago(5h) .. ago(3h))
-| where DeviceName == ">device.internaldomain>" //and RemoteIP == "<IP>"
+| where DeviceName contains "<device.internaldomain>" //and RemoteIP == "<IP>"
 ```
+Check DeviceNetworkEvents for activity between timestamps (2h period) for particular device and IP. Associated with "Hunt for related activity"
 
 ```kql
 let selectedTimestamp = datetime(<time>)
@@ -212,6 +217,7 @@ and DeviceName == "<device>"
 | extend Relevance = ifff(Timestamp == selectedTimestamp, "Selected event", ifff(Timestamp < selectedTimestamp, "Earlier event", "Later event"))
 | project-reorder Relevance
 ```
+Check DeviceNetworkEvents for particular device related activity during specific time. Automated query from "Hunt for related events" in Device Timeline. No added filters alongside relevance
 
 ```kql
 let selectedTimestamp = datetime(<time>)
