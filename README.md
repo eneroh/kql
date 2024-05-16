@@ -320,7 +320,7 @@ CommonSecurityLog
 | where SourceUserName == "<user>"
 | project TimeGenerated, DeviceEventClassID, Activity, SourceUserName
 ```
-Check commonsecuritylog for CyberArk activity - Useful for: CCX - CyberArk Undefined User Login
+Check commonsecuritylog for CyberArk activity - Useful for: <custom> - CyberArk Undefined User Login
 
 ```kql
 AzureDiagnostics
