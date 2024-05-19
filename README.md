@@ -26,8 +26,9 @@ dcount
 Calculates an estimate of the number of distinct values that are taken by scaler expression in the summary group. Null is ignored entirely.
 ```kql
 top
-top 100
-top 10
+top 100 by MachineCount
+top 10 by avg_CPU
+top 50 by Timestamp
 ```
 Displays top X results
 ```kql
