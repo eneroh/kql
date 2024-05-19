@@ -409,3 +409,51 @@ DeviceEvents
 | sort by Timestamp desc 
 ```
 Check DeviceEvents for Defender Scan Actions completed or cancelled
+
+```kql
+let Domain = "<suspicious domain/url>";
+DeviceNetworkEvents
+| where Timestamp > ago(7d) and RemoteUrl contains Domain
+| project Timestamp, DeviceName, RemotePort, Remoteurl
+| top 100 by Timestamp desc
+```
+Check DeviceNetworkEvents for communication with specific domain/url
+
+```kql
+union DeviceProcessEvents, DeviceNetworkEvents
+| where Timestamp > ago(7d)
+| where FileName in~ ("powershell.exe","powershell_ise.exe")
+| where ProcessCommandLine has_any("WebClient","DownloadFile","DownloadData","DownloadString","WebRequest","Shellcode","http","https")
+| project Timestamp, DeviceName, InitiatingProcessFuileName, InitiatingProcessCommandLine, FileName, ProcessCommandLine, RemoteIP, RemoteUrl, RemotePort, RemoteIPType
+| top 100 by Timestamp
+```
+Check DeviceProcessEvents and DeviceNetworkEvents via union (combine multiple device query tables), for powershell execution events associated with downloading
+
+```kql
+DeviceProcessEvents 
+| where FolderPath endswith "\\schtasks.exe" and ProcessCommandLine has "/create" and AccountName != "system" 
+| where Timestamp > ago(7d) 
+```
+Check DeviceProcessEvents for scheduled tasks created by non-system accounts
+
+```kql
+DeviceRegistryEvents  
+| where ActionType == "RegistryValueSet"  
+| where RegistryValueName == "DefaultPassword"  
+| where RegistryKey has @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" 
+| project Timestamp, DeviceName, RegistryKey | top 100 by Timestamp 
+```
+Check DeviceRegistryEvents for possible clear text passwords in twindows registry
+
+```kql
+DeviceProcessEvents 
+| where Timestamp > ago(14d) 
+| where ProcessCommandLine contains ".decode('base64')" or ProcessCommandLine contains "base64 --decode" or ProcessCommandLine contains ".decode64(" 
+| project Timestamp , DeviceName , FileName , FolderPath , ProcessCommandLine , InitiatingProcessCommandLine  
+| top 100 by Timestamp 
+```
+CheckProcessEvents for process executed from binary hidden in base64 encoded file
+
+```kql
+
+```
