@@ -1,7 +1,7 @@
 # kql
 
 ## Summary
-This README houses queries that I have utilized. Inspiration for this document, my upskilling and some queries goes to reprise99.
+This README houses queries that I have utilized. Inspiration for this document, my upskilling and some queries goes to reprise99, as well as: https://learnsentinel.blog/tag/kql/
 
 ```kql
 CommonSecurityLog
