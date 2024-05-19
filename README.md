@@ -354,3 +354,58 @@ DeviceFileEvents
 ```
 Check DeviceFileEvents for SHA1 file hash
 
+```kql
+DeviceEvents 
+| where ActionType in ("FirewallOutboundConnectionBlocked", "FirewallInboundConnectionBlocked", "FirewallInboundConnectionToAppBlocked") 
+| project DeviceId , Timestamp , InitiatingProcessFileName , InitiatingProcessParentFileName, RemoteIP, RemotePort, LocalIP, LocalPort 
+| summarize MachineCount=dcount(DeviceId) by RemoteIP 
+| top 100 by MachineCount desc 
+```
+Check DeviceEvents for devices associated with Firewall Blocked
+
+```kql
+DeviceLogonEvents 
+| where isnotempty(RemoteIP)  
+    and AccountName !endswith "$" 
+    and RemoteIPType == "Public" 
+| extend Account=strcat(AccountDomain, "\\", AccountName) 
+| summarize  
+    Successful=countif(ActionType == "LogonSuccess"), 
+    Failed = countif(ActionType == "LogonFailed"), 
+    FailedAccountsCount = dcountif(Account, ActionType == "LogonFailed"), 
+    SuccessfulAccountsCount = dcountif(Account, ActionType == "LogonSuccess"), 
+    FailedAccounts = makeset(iff(ActionType == "LogonFailed", Account, ""), 5), 
+    SuccessfulAccounts = makeset(iff(ActionType == "LogonSuccess", Account, ""), 5) 
+    by DeviceName, RemoteIP, RemoteIPType 
+| where Failed > 10 and Successful > 0 and FailedAccountsCount > 2 and SuccessfulAccountsCount == 1  
+```
+Look for public IP addresses with multiple failed logon attempts, using multiple accounts and eventually succeeded
+
+```kql
+// Note - RemoteDeviceName is not available in all remote logon attempts 
+DeviceLogonEvents 
+| where isnotempty(RemoteDeviceName) 
+| extend Account=strcat(AccountDomain, "\\", AccountName) 
+| summarize  
+    Successful=countif(ActionType == "LogonSuccess"), 
+    Failed = countif(ActionType == "LogonFailed"), 
+    FailedAccountsCount = dcountif(Account, ActionType == "LogonFailed"), 
+    SuccessfulAccountsCount = dcountif(Account, ActionType == "LogonSuccess"), 
+    FailedComputerCount = dcountif(DeviceName, ActionType == "LogonFailed"), 
+    SuccessfulComputerCount = dcountif(DeviceName, ActionType == "LogonSuccess") 
+    by RemoteDeviceName 
+| where 
+    Successful > 0 and 
+    ((FailedComputerCount > 100 and FailedComputerCount > SuccessfulComputerCount) or 
+        (FailedAccountsCount > 100 and FailedAccountsCount > SuccessfulAccountsCount)) 
+```
+Check DeviceLogonEvents for failed log-ons to multiple machines or using multiple accounts
+
+```kql
+DeviceEvents 
+| where ActionType in ("AntivirusScanCompleted", "AntivirusScanCancelled") 
+| extend A=parse_json(AdditionalFields)  
+| project Timestamp, DeviceName, ActionType,ScanType = A.ScanTypeIndex, StartedBy= A.User 
+| sort by Timestamp desc 
+```
+Check DeviceEvents for Defender Scan Actions completed or cancelled
