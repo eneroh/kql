@@ -3,7 +3,7 @@
 ## Summary
 This README houses queries that I have utilized. Inspiration for this document, my upskilling and some queries goes to reprise99, as well as: https://learnsentinel.blog/tag/kql/ and https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/microsoft-defender-for-endpoint-commonly-used-queries-and/ba-p/1795046?ref=rbwilson.ca
 
-## Commands/operators overview
+## Commands/operators/functions overview
 ```kql
 let
 ```
@@ -23,7 +23,7 @@ Acts as dedup in SPL, only focuses on results that are special, no duplicates
 ```kql
 dcount
 ```
-The above but with numbers
+Calculates an estimate of the number of distinct values that are taken by scaler expression in the summary group. Null is ignored entirely.
 ```kql
 top
 top 100
