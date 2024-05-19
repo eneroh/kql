@@ -67,6 +67,20 @@ print x=dynamic([23, 46, 23, 87, 4, 8, 3, 75, 2, 56, 13, 75, 32, 16, 29])
 ```
 Returns statistics for numerical series in a table with a column for each statistic
 
+```kql
+count
+CommonSecurityLog
+| count
+```
+Operator - Returns the number of records for the input record set
+
+```kql
+count()
+StormEvents
+| summarize Count=count() by State
+```
+Counts the number of records per summarization group or total if summarization is done without grouping. Null values are ignored entirely.
+
 ## Useful KQL Queries
 
 ```kql
