@@ -13,6 +13,10 @@ union
 ```
 Combine multiple device query tables (union DeviceProcessEvents, DeviceNetworkEvents)
 ```kql
+join
+```
+Merge the rows of two tables to form a new table by matching values of the specified columns for each table
+```kql
 distinct
 ```
 Acts as dedup in SPL, only focuses on results that are special, no duplicates
