@@ -3,6 +3,67 @@
 ## Summary
 This README houses queries that I have utilized. Inspiration for this document, my upskilling and some queries goes to reprise99, as well as: https://learnsentinel.blog/tag/kql/ and https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/microsoft-defender-for-endpoint-commonly-used-queries-and/ba-p/1795046?ref=rbwilson.ca
 
+## Commands/operators overview
+```kql
+let
+```
+Allows you to create a variable and call back to it in a later instance (time, url, device)
+```kql
+union
+```
+Combine multiple device query tables (union DeviceProcessEvents, DeviceNetworkEvents)
+```kql
+distinct
+```
+Acts as dedup in SPL, only focuses on results that are special, no duplicates
+```kql
+dcount
+```
+The above but with numbers
+```kql
+top
+top 100
+top 10
+```
+Displays top X results
+```kql
+extend
+extend = Duration = EndTime - StartTime
+```
+Create calculated columns and appends them to the result
+```kql
+project
+| project TimeGenerated
+| project StartLocation =  BeginLocation, TotalInjuries = InjuriesDirect + InjuriesIndirect
+| where Totalinjuries > 5
+```
+Create columes, features: rename, drop, insert new computed columns, column order is specified by the order or arguments
+```kql
+summarize
+```
+Produces a table that aggregates the content of the input table. Can be used for extra features such as creating visualisations and counts
+```kql
+parse_json()
+```
+Interprets string as JSON value, returns value as dynamic
+```kql
+extract_json()
+```
+When you need to extract more than one element of a JSON compound object. Use dynamic() when possible
+```kql
+tostring()
+```
+Very commonly used with summarize to convert a value to a string (specifically numbers i.e. tostring(123)
+
+```kql
+series_stats()
+print x=dynamic([23, 46, 23, 87, 4, 8, 3, 75, 2, 56, 13, 75, 32, 16, 29]) 
+| project series_stats(x)
+```
+Returns statistics for numerical series in a table with a column for each statistic
+
+## Useful KQL Queries
+
 ```kql
 CommonSecurityLog
 | where DestinationIP == "<IP>"
