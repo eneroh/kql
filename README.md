@@ -339,3 +339,11 @@ CommonSecurityLog
 | project TimeGenerated, DeviceVendor, DeviceProduct, DeviceAction, Activity, DestinationHostName, DestinationIP, DestinationPort, SourceIP, SourcePort, RequestURL, RequestContext, SourceUserName, SourceTranslatedAddress
 ```
 Check CommonSecurityLog for specific timestamp 30mins forwards and backwards via the Dest. IP, then project results
+
+```kql
+DeviceProcessEvents
+| where Timestamp > ago(1h)
+| summarize avg(CPU) by ProcessName
+| top 10 by avg_CPU
+```
+Returns the top 10 processes by CPU usage in the last hour
