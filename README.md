@@ -1,7 +1,7 @@
 # kql
 
 ## Summary
-This README houses queries that I have utilized. Inspiration for this document, my upskilling and some queries goes to reprise99, as well as: https://learnsentinel.blog/tag/kql/
+This README houses queries that I have utilized. Inspiration for this document, my upskilling and some queries goes to reprise99, as well as: https://learnsentinel.blog/tag/kql/ and https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/microsoft-defender-for-endpoint-commonly-used-queries-and/ba-p/1795046?ref=rbwilson.ca
 
 ```kql
 CommonSecurityLog
