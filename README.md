@@ -79,7 +79,7 @@ count()
 StormEvents
 | summarize Count=count() by State
 ```
-Counts the number of records per summarization group or total if summarization is done without grouping. Null values are ignored entirely.
+Function - Counts the number of records per summarization group or total if summarization is done without grouping. Null values are ignored entirely.
 
 ## Useful KQL Queries
 
