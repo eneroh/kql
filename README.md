@@ -21,9 +21,9 @@ distinct
 ```
 Acts as dedup in SPL, only focuses on results that are special, no duplicates
 ```kql
-dcount
+dcount()
 ```
-Calculates an estimate of the number of distinct values that are taken by scaler expression in the summary group. Null is ignored entirely.
+Function - Calculates an estimate of the number of distinct values that are taken by scaler expression in the summary group. Null is ignored entirely.
 ```kql
 top
 top 100 by MachineCount
