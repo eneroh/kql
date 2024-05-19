@@ -50,22 +50,22 @@ Produces a table that aggregates the content of the input table. Can be used for
 ```kql
 parse_json()
 ```
-Interprets string as JSON value, returns value as dynamic
+Function - Interprets string as JSON value, returns value as dynamic
 ```kql
 extract_json()
 ```
-When you need to extract more than one element of a JSON compound object. Use dynamic() when possible
+Function - When you need to extract more than one element of a JSON compound object. Use dynamic() when possible
 ```kql
 tostring()
 ```
-Very commonly used with summarize to convert a value to a string (specifically numbers i.e. tostring(123)
+Function - Very commonly used with summarize to convert a value to a string (specifically numbers i.e. tostring(123)
 
 ```kql
 series_stats()
 print x=dynamic([23, 46, 23, 87, 4, 8, 3, 75, 2, 56, 13, 75, 32, 16, 29]) 
 | project series_stats(x)
 ```
-Returns statistics for numerical series in a table with a column for each statistic
+Function - Returns statistics for numerical series in a table with a column for each statistic
 
 ```kql
 count
