@@ -347,3 +347,10 @@ DeviceProcessEvents
 | top 10 by avg_CPU
 ```
 Returns the top 10 processes by CPU usage in the last hour
+
+```kql
+DeviceFileEvents 
+| where SHA1 == "4aa9deb33c936c0087fb05e312ca1f09369acd27"  
+```
+Check DeviceFileEvents for SHA1 file hash
+
