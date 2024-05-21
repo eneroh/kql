@@ -326,7 +326,7 @@ AzureDiagnostics
 | where userAgent_s == "<useragent>"
 | project TimeGenerated, clientIP_s, clientIp_s, httpStatusCode_d
 ```
-Check AzureDiagnostics for particular Malformed User Agent
+Check AzureDiagnostics for particular Malformed User Agent (old)
 
 ```kql
 DeviceNetworkEvents
@@ -408,7 +408,7 @@ AzureDiagnostics
 | where timestamp == <time>
 | project TimeGenerated, clientIP_s, clientIp_s, httpStatusCode_d
 ```
-Check AzureDiagnostics for particular Malformed User Agent
+Check AzureDiagnostics for particular Malformed User Agent (improved)
 
 ```kql
 let selectedTimestamp = datetime('YYYY-MM-DDTHH:MM:SS.MSZ')
@@ -535,5 +535,28 @@ DeviceProcessEvents
 CheckProcessEvents for process executed from binary hidden in base64 encoded file
 
 ```kql
-
+AADServicePrincipalSignInLogs
+| where TimeGenerated > ago(30d)
+| where ServicePrincipalId contains "<ObjectId>"
+| project TimeGenerated, Category, IPAddress, Location, LocationDetails, ResourceDisplayName
 ```
+Check AADServicePrincipalSignInLogs for activity associated to CallerObjectId - Useful for reviewing signinlogs for mass resource cloud deletion, mass secret retrieval from azure key vault etc.
+
+```kql
+OfficeActiviy
+| where TimeGenerated > ago(7d)
+| where UserId contains "<user>"
+| where Operation has_any ("MemberRemoved","MemberAdded")
+| project TimeGenerated, RecordType, Operation, UserId, ClientIP, Members, ItemName
+```
+Check OfficeActivity for specific timeframe, userid, operation then project results - Useful for External user added and removed in short timeframe
+
+```kql
+OfficeActivity
+| where TimeGenerated > ago(7d)
+//| where UserId contains "<user>"
+| where Members contains "<user being removed>"
+| where Operation has_any ("MemberRemoved","MemberAdded")
+| project TimeGenerated, RecordType, Operation, UserId, ClientIP, Members, ItemName
+```
+Wider scope of the above to provide a bigger picture of what is occurring
