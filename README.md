@@ -560,3 +560,25 @@ OfficeActivity
 | project TimeGenerated, RecordType, Operation, UserId, ClientIP, Members, ItemName
 ```
 Wider scope of the above to provide a bigger picture of what is occurring
+
+```kql
+SigninLogs
+| where TimeGenerated > ago(30d)
+| where UserPrincipalName contains == "<User>"
+//| where IPAddress contains "<IP"
+//| where AppDisplayName contains "<App>"
+//| where ResultType contains "0"
+| project TimeGenerated, UserPrincipalName, Location, Status, DeviceDetail, IPAddress, AppDisplayName, LocationDetails, AuthentictionRequirement, MfaDetail, AuthenticationDetails, ResultType
+```
+Utilizing contains instead of ==, more forgiving than my old SigninLogs query
+
+```kql
+AADNonInteractiveSignInLogs
+| where TimeGenerated > ago(30d)
+| where UserPrincipalName contains == "<User>"
+//| where IPAddress contains "<IP"
+//| where AppDisplayName contains "<App>"
+//| where ResultType contains "0"
+| project TimeGenerated, UserPrincipalName, Location, Status, DeviceDetail, IPAddress, AppDisplayName, LocationDetails, AuthentictionRequirement, MfaDetail, AuthenticationDetails, ResultType
+```
+Utilizing contains instead of ==, more forgiving than my old AADNonInteractiveSignInLogs query
