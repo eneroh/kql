@@ -582,3 +582,13 @@ AADNonInteractiveSignInLogs
 | project TimeGenerated, UserPrincipalName, Location, Status, DeviceDetail, IPAddress, AppDisplayName, LocationDetails, AuthentictionRequirement, MfaDetail, AuthenticationDetails, ResultType
 ```
 Utilizing contains instead of ==, more forgiving than my old AADNonInteractiveSignInLogs query
+
+```kql
+AzureDiagnostics
+| where ResourceProvider == "MICROSFT.CDN" and Category == "FrontDoorAccessLog"
+| where TimeGenerated == <time>
+//| project TimeGenerated, clientIP_s, clientIp_s, host_s, action_s
+```
+Check WAF - Web application firewall for particular activity - Useful for: AFD WAF - Code Injection
+<br>
+This is also how you access waf logs
