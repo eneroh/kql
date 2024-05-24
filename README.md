@@ -592,3 +592,12 @@ AzureDiagnostics
 Check WAF - Web application firewall for particular activity - Useful for: AFD WAF - Code Injection
 <br>
 This is also how you access waf logs
+
+```kql
+EmailEvents
+| where RecipientEmailAddress !endswith "<domain>" and Subject startwith "FW" and not(Subject contains "vaccination")
+| summarize total_count=count(), distinct_recipients=dcount(RecipientEmailAddress), recipients=make_set(RecipientEmailAddress), subject_list=make_set(Subject), distinct_subject=dcount(Subject) by SenderFromAddress
+| where distinct_recipients <= 2 and total_count > 10 and distinct_subject >= 10
+| sort by total_count desc
+```
+Check EmailEvents for emails being forward (data exfiltration) to external mail account
