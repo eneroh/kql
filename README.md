@@ -601,3 +601,10 @@ EmailEvents
 | sort by total_count desc
 ```
 Check EmailEvents for emails being forward (data exfiltration) to external mail account
+
+```kql
+AuditLogs
+| where InitiatedBy contains "<user>"
+| where OperationName in ("Add conditional access policy","Update conditional access policy","Delete conditional access policy")
+```
+Check AuditLogs for conditional access policy modification
