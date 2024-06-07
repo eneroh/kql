@@ -607,4 +607,4 @@ AuditLogs
 | where InitiatedBy contains "<user>"
 | where OperationName in ("Add conditional access policy","Update conditional access policy","Delete conditional access policy")
 ```
-Check AuditLogs for conditional access policy modification
+Check AuditLogs for conditional access policy changes
