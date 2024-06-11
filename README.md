@@ -608,3 +608,20 @@ AuditLogs
 | where OperationName in ("Add conditional access policy","Update conditional access policy","Delete conditional access policy")
 ```
 Check AuditLogs for conditional access policy changes
+
+```kql
+OfficeActivity
+| where UserId contains "<user>"
+| where Operation contains "Deleted"
+| where RecordType contains "MicrosoftTeams"
+```
+Check OfficeActivity for Deleted activity associated to user and app Microsoft Teams - Useful for Mulitple team deletions by user
+
+```kql
+OfficeActivity
+| where TimeGenerated > ago(30d)
+//| where UserId contains "<user>"
+| where Operation contains "TeamDeleted"
+| where RecordType contains "MicrosoftTeams"
+```
+Check OfficeActivity for multiple users associated to team deletions in Microsoft Teams
