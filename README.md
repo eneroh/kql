@@ -625,3 +625,14 @@ OfficeActivity
 | where RecordType contains "MicrosoftTeams"
 ```
 Check OfficeActivity for multiple users associated to team deletions in Microsoft Teams
+
+```kql
+AuditLogs
+| where OperationName startswith "Delete conditional access policy"
+| project TimeGenerated, OperationName, Id, InitiatedBy, Result, TargetResources, AADOperationType
+```
+Check AuditLogs for OperationName then project filters - Useful for: Conditional access policy changes
+
+```kql
+
+```
