@@ -634,5 +634,24 @@ AuditLogs
 Check AuditLogs for OperationName then project filters - Useful for: Conditional access policy changes
 
 ```kql
-
+AADServicePrincipalSignInLogs
+| where ServicePrincipalId == "<Caller>"
+| where IPAddress == "<IP>"
 ```
+Check ServicePrincipalSignInLogs for suspicious activity associated to Service Principal account - Useful for: Suspicious Resource Deployment
+
+```kql
+AzureActivity
+| where TimeGenerated == todatetime('<time>')
+| where Caller == "<Caller>"
+| where OperationNameValue has_any ("MICROSOFT.RESOURCES/DEPLOYMENTS/WRITE")
+```
+Check AzureActivity for specific activity associated to caller, operation at particular time - Useful for: Suspicious Resource Deployment
+
+```kql
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where Caller == "<Caller>"
+| where OperationNameValue has_any ("MICROSOFT.RESOURCES/DEPLOYMENTS/WRITE")
+```
+Check AzureActivity for specific activity but do a wider lens - Useful for: Suspicious Resource Deployment
