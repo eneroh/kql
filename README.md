@@ -655,3 +655,11 @@ AzureActivity
 | where OperationNameValue has_any ("MICROSOFT.RESOURCES/DEPLOYMENTS/WRITE")
 ```
 Check AzureActivity for specific activity but do a wider lens - Useful for: Suspicious Resource Deployment
+
+```kql
+OfficeActivity
+| where TimeGenerated > ago(7d)
+| where Operation in ("FileDownloaded","FileSyncDownloadedFull")
+| where OfficeObjectId contains "<Sharepoint file location"
+```
+Check OfficeActivity for particular file that is associated to Mass Download alert
