@@ -663,3 +663,13 @@ OfficeActivity
 | where OfficeObjectId contains "<Sharepoint file location"
 ```
 Check OfficeActivity for particular file that is associated to Mass Download alert
+
+```kql
+CommonSecurityLog
+| where TimeGenerated > ago(10m)
+| where DeviceVendor contains "<Network Appliance>"
+| sort by TimeGenerated
+| take 10
+```
+Check CommonSecurityLog for network appliance activity - Useful for: Automatic log upload error
+(Confirm if network appliance is gathering logs)
