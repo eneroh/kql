@@ -672,4 +672,5 @@ CommonSecurityLog
 | take 10
 ```
 Check CommonSecurityLog for network appliance activity - Useful for: Automatic log upload error
+<br>
 (Confirm if network appliance is gathering logs)
