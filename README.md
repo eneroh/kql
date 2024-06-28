@@ -681,3 +681,15 @@ seach in (<table>,<table>,<table>) "text/IP"
 | distinct UserPrincipalName
 ```
 Check singular/multiple tables for particular text/IP, for particular time period and unique user, can edit further for project/distinct and create charts etc.
+
+```kql
+SignInLogs
+| where TimeGenerated > ago(30d)
+| where UserPrincipalName contains "<User>"
+| where Location !in ("AU","NZ")
+//| where IPAddress in ("<IP>")
+//| where AppDisplayName == "<App>"
+//| where ResultType == "0"
+| distinct IPAddress, Location, ResultDescription
+```
+Check SignInLogs for a particular user, not in location AU or NZ over the last 30 day period, then present only distinct IP addresses, followed by location and resultdescription associated to the distinct IP addresses. Can be honed forward or back depending.
