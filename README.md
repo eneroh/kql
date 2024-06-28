@@ -674,3 +674,10 @@ CommonSecurityLog
 Check CommonSecurityLog for network appliance activity - Useful for: Automatic log upload error
 <br>
 (Confirm if network appliance is gathering logs)
+
+```kql
+seach in (<table>,<table>,<table>) "text/IP"
+| where TimeGenerated > ago(3d)
+| distinct UserPrincipalName
+```
+Check singular/multiple tables for particular text/IP, for particular time period and unique user, can edit further for project/distinct and create charts etc.
