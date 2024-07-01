@@ -695,3 +695,14 @@ SignInLogs
 Check SignInLogs for a particular user, not in location AU or NZ over the last 30 day period, then present only distinct IP addresses, followed by location and resultdescription associated to the distinct IP addresses.
 <br>
 Can be honed forward or back depending.
+
+```kql
+SigninLogs
+| where TimeGenerated > ago(30d)
+| where UserPrincipalName contains == "<User>"
+//| where IPAddress contains "<IP"
+//| where AppDisplayName contains "<App>"
+//| where ResultType contains "0"
+| project TimeGenerated, UserPrincipalName, Location, Status, DeviceDetail, IPAddress, AppDisplayName, LocationDetails, AuthentictionRequirement, MfaDetail, AuthenticationDetails, ResultType, tostring(ConditionalAccessPolicies)
+```
+My main query but with the addition of ConditionalAccessPolicies
