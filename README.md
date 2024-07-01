@@ -676,7 +676,7 @@ Check CommonSecurityLog for network appliance activity - Useful for: Automatic l
 (Confirm if network appliance is gathering logs)
 
 ```kql
-seach in (<table>,<table>,<table>) "text/IP"
+search in (<table>,<table>,<table>) "text/IP"
 | where TimeGenerated > ago(3d)
 | distinct UserPrincipalName
 ```
@@ -692,4 +692,6 @@ SignInLogs
 //| where ResultType == "0"
 | distinct IPAddress, Location, ResultDescription
 ```
-Check SignInLogs for a particular user, not in location AU or NZ over the last 30 day period, then present only distinct IP addresses, followed by location and resultdescription associated to the distinct IP addresses. Can be honed forward or back depending.
+Check SignInLogs for a particular user, not in location AU or NZ over the last 30 day period, then present only distinct IP addresses, followed by location and resultdescription associated to the distinct IP addresses.
+<br>
+Can be honed forward or back depending.
