@@ -706,3 +706,14 @@ SigninLogs
 | project TimeGenerated, UserPrincipalName, Location, Status, DeviceDetail, IPAddress, AppDisplayName, LocationDetails, AuthentictionRequirement, MfaDetail, AuthenticationDetails, ResultType, tostring(ConditionalAccessPolicies)
 ```
 My main query but with the addition of ConditionalAccessPolicies
+
+```kql
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where OperationNameValue in ("MICROSOFT.AUTHORIZATION/POLICIES/DENY/ACTION")
+| where Caller contains "<user>"
+//| where Properties contains "Prevent <policy details>"
+```
+Check AzureActivity for attempts to bypass policy by user over the last 7 day period
+<br>
+Useful for: Attempted creation of public facing resource
