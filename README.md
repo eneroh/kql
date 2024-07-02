@@ -716,4 +716,4 @@ AzureActivity
 ```
 Check AzureActivity for attempts to bypass policy by user over the last 7 day period
 <br>
-Useful for: Attempted creation of external facing resource
+Useful for: Attempted creation of external resource
