@@ -717,3 +717,22 @@ AzureActivity
 Check AzureActivity for attempts to bypass policy by user over the last 7 day period
 <br>
 Useful for: Attempted creation of external resource
+
+```kql
+search in (AADManagedIdentitySignInLogs) "<ServicePrincipalId>"
+| where TimeGenerated > ago(5d)
+| project TimeGenerated, ServicePrincipalId, AppId, Type
+```
+Check AADManagedIdentitySignInLogs for ServicePrincipalId over the last 5 day period then filter results using project, you can also comment out the project to see all results
+
+```kql
+AADManagedIdentitySignInLogs
+| where TimeGenerated > ago(5d)
+| where ServicePrincipalId contains "<ServicePrincipalId>"
+| project TimeGenerated, ServicePrincipalId, AppId, Type
+```
+Check AADManagedSignInLogs, ServicePrincipalId over the last 5 day period then filter results with project, you can also comment out the project to see all results
+
+```kql
+
+```
