@@ -734,5 +734,30 @@ AADManagedIdentitySignInLogs
 Check AADManagedSignInLogs, ServicePrincipalId over the last 5 day period then filter results with project, you can also comment out the project to see all results
 
 ```kql
+SignInLogs
+| where TimeGeneated > ago(30d)
+| where UserPrincipalName contains "<user>" and AppDisplayName != "Bing"
+| where Location != "<User primary location as per EntraID>"
+| distinct IPAddress, Location, ResultType, Status
+```
+Displays all UNIQUE ip addresses associated with user that are typically failed and not in user's regular EntraID location
+
+```kql
+SignInLogs
+| where TimeGenerated > ago(30d)
+| where IPAddress in("<Suspicious IP>")
+| summarize by TimeGenerated, UserPrincipalName, Location, tostring(Status), tostring(DeviceDetail), IPAddress, AppDisplayName, tostring(LocationDetails), AuthenticationRequirement, tostring(MfaDetail), AuthenticationDetails, ResultType, tostring(ConditionalAccessPolicies)
+```
+Displays all activity associated with suspicious IP address then filtering them in a manner that is acceptable
+
+```kql
+union DeviceProcessEvents, DeviceFileEvents
+| where MD5 has_any ("<file_hash1>","<file_hash2>","<file_hash3>")
+| project-reorder TimeGenerated, Type, ActionType, FileName, MD5, DeviceName
+| sort by TimeGenerated, desc
+```
+Displays devices associated with suspicious MD5 hash then filters and sorts that data using respective filters
+
+```kql
 
 ```
