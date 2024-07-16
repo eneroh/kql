@@ -759,5 +759,16 @@ union DeviceProcessEvents, DeviceFileEvents
 Displays devices associated with suspicious MD5 hash then filters and sorts that data using respective filters
 
 ```kql
+SignInLogs
+| where TimeGeneated > ago(30d)
+| where UserPrincipalName contains "<user>" and AppDisplayName contains "Powershell"
+| summarize by TimeGenerated, UserPrincipalName, Location, tostring(Status), tostring(DeviceDetail), IPAddress, AppDisplayName, tostring(LocationDetails), AuthenticationRequirement, tostring(MfaDetail), AuthenticationDetails, ResultType, tostring(ConditionalAccessPolicies)
+| distinct IPAddress, Location, ResultType, Status
+```
+Looks specific for a user and logins associated with Powershell, very uncommon activity for non-technical user roles. So it's good to reference their role via EntraID before making determination
+<br>
+Typically can involve many failed logins so it's good to be filter them so it's easier to read for remediation of: blocking suspicious IP address ranges
+
+```kql
 
 ```
