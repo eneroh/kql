@@ -770,5 +770,11 @@ Looks specific for a user and logins associated with Powershell, very uncommon a
 Typically can involve many failed logins so it's good to be filter them so it's easier to read for remediation of: blocking suspicious IP address ranges
 
 ```kql
-
+| where not(RemoteUrl has_any("<Domain>","<Domain>","<Domain>")
 ```
+Limitations in KQL make it so you cannot do !contains for an array, instead you have to do things more round-a-bout but this works so we're good
+
+```kql
+| where isnotempty(<field>)
+```
+Displays information that is not empty
