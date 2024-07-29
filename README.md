@@ -840,7 +840,7 @@ IdentityInfo
 | where AccountUPN in~ ("<user1>","<user2>","<user3>")
 | summarize by AccountUPN, IsAccountEnabled
 ```
-Mass search for confirming if user's status of active or disabled. Results inaccurate, therefore manual intervention is necessary
+Mass search for confirming user's status of active or disabled. Results inaccurate, therefore manual intervention is necessary
 
 ```kql
 LAQueryLogs
