@@ -778,3 +778,78 @@ Limitations in KQL make it so you cannot do !contains for an array, instead you 
 | where isnotempty(<field>)
 ```
 Displays information that is not empty
+
+```kql
+search in (AzureDiagnostics) "<Enterprise Application Account ID>"
+| where TimeGenerated > ago(7d)
+```
+Allows for fast searching associated to Enterprise application account. Review materials associated to specific id. Associated to Sensitive Cloud related activities.
+
+```kql
+AlertInfo
+| where Timestamp between (datetime(date) .. (datetime(date))
+| summarize count() by Title, Category, ServiceSource
+```
+Check for alerts during time period to see if the event was detected by defender
+
+```kql
+DeviceNetworkEvents
+| where TimeGenerated between (datetime(date) .. (datetime(date))
+| where DeviceName contains "<affected device>"
+| search "Facebook"
+| project TimeGenerated, IntiatingProcessAccountName, ActionType, InitiatingProcessName, RemoteIP, RemotePort, RemoteUrl
+| sort by TimeGenerated desc
+```
+Check timeframe for user's facebook access
+
+```kql
+DeviceFileEvents
+| where TimeGenerated between (datetime(date) .. (datetime(date))
+| where DeviceName contains "<affected device>"
+| project TimeGenerated, IntiatingProcessAccountName, ActionType, InitiatingProcessName, RemoteIP, RemotePort, RemoteUrl
+| sort by TimeGenerated desc
+```
+Check DeviceFileEvents for suspicious file activity
+
+```kql
+DeviceProcessEvents
+| where TimeGenerated between (datetime(date) .. (datetime(date))
+| where DeviceName contains "<affected device>"
+| project TimeGenerated, IntiatingProcessAccountName, ActionType, InitiatingProcessName, RemoteIP, RemotePort, RemoteUrl
+| sort by TimeGenerated desc
+```
+Display process during timeframe, typically associated with windows and chrome updates. Needs honing to be useful
+
+```kql
+DeviceNetworkEvents
+| where TimeGenerated between (datetime(date) .. (datetime(date))
+| seach <blanket search term>
+| project TimeGenerated, DeviceName, ActionType
+```
+Blanket search
+
+```kql
+search in (OfficeActivity) "<user>"
+| where RecordType contains "MicrosoftTeams"
+| where Operation contains "Deleted"
+```
+Check for mass deletions associated to microsoft teams for particular user
+
+```kql
+IdentityInfo
+| where AccountUPN in~ ("<user1>","<user2>","<user3>")
+| summarize by AccountUPN, IsAccountEnabled
+```
+Mass search for confirming if user's status of active or disabled. Results inaccurate, therefore manual intervention is necessary
+
+```kql
+LAQueryLogs
+| where TimeGenereated > ago(7d)
+| where AADEmail contains "<kql user>"
+| project AADEmail, Query
+```
+Review user kql logs, typically in use by seniors to review activity of underlings
+
+```kql
+
+```
