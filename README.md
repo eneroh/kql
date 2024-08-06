@@ -7,7 +7,7 @@ This README houses queries that I have utilized. Inspiration for this document, 
 ```kql
 let
 ```
-Allows you to create a variable and call back to it in a later instance (time, url, device)
+Allows you to create a variable and call back to it in a later instance (time, url, device, arrays)
 ```kql
 union
 ```
