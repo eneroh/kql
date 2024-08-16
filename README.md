@@ -851,5 +851,38 @@ LAQueryLogs
 Review user kql logs, typically in use by seniors to review activity of underlings
 
 ```kql
+DeviceLogonEvents
+| where DeviceName in ("<Device1>","<Device2>","<Device3>")
+ActionType == FailureReason
+| summarize LogonFailures=count() by DeviceName,LogonType
+```
+MS Defender Advanced Hunting Query to find failed sign in auths for specified devices then filter out results
+
+```kql
+EmailAttachmentInfo
+| where SenderFromAddress =~ "MaliciousSender@example.com"
+| where isnotempty (SHA256
+| join (DeviceFileEvents
+| project FileName, SHA256
+) on SHA256
+| project Timestamp, FileName, SHA256, DeviceName, DeviceId, NetworkMessageId, SenderFromAddress, RecipientEmailAddress
+```
+MS Defender Advanced Hunting Query to identify devices affected by malicious email attachment
+
+```kql
+let MaliciousEmails = EmailEvents
+| where MalwareFilterVerdict == "Malware"
+| project TimeEmail = Timestamp, Subject, SenderFromAddress, AccountName = tostring(split(RecipientEmailAddress,"@") [0]);
+MaliciousEmails
+| join(IdentityLogonEvents
+| project IdentityLogonEvents
+| project LogonTime = Timestamp, AccountName, DeviceName
+) on AccountName
+| where LogonTime - TimeEmail) between (0min.. 60min)
+| take 20
+```
+20 most recent sign-ins performed by email recipient accounts that were compromised, within the last hour of receiving a known malicious email
+
+```kql
 
 ```
