@@ -861,7 +861,7 @@ MS Defender Advanced Hunting Query to find failed sign in auths for specified de
 ```kql
 EmailAttachmentInfo
 | where SenderFromAddress =~ "MaliciousSender@example.com"
-| where isnotempty (SHA256
+| where isnotempty (SHA256)
 | join (DeviceFileEvents
 | project FileName, SHA256
 ) on SHA256
