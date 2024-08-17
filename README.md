@@ -884,5 +884,6 @@ MaliciousEmails
 20 most recent sign-ins performed by email recipient accounts that were compromised, within the last hour of receiving a known malicious email
 
 ```kql
-
+Project1(c:c)(date=2024-02-01..2023-02-10)
 ```
+Search for files with the name "Project1", stored on the team site "Team1"(c:c), with a mod date between dates
